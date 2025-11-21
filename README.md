@@ -1,7 +1,9 @@
 # Automated Sales Report Distribution Using Google Apps Script
 
 This project automates the process of filtering sales data by salesperson and sending them their individual reports in Google Sheet format via email — without using PDFs or Excel files.
-
+## photos
+![photo](https://github.com/pintumavai9-blip/Automated-Sales-Report-Google-Apps-Script/blob/main/Screenshot%202025-11-21%20143045.png)
+![photo](https://github.com/pintumavai9-blip/Automated-Sales-Report-Google-Apps-Script/blob/main/Screenshot%202025-11-21%20143706.png)
 ## ✨ Features
 - Filters sales records for every Salesman automatically
 - Creates temporary Google Sheets containing only relevant data
