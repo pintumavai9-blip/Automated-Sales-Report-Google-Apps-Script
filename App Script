@@ -1,0 +1,40 @@
+function sendSalesDataToSalesman() {
+  var mainSS = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet1 = mainSS.getSheetByName("Sheet1");  // Sales data
+  var sheet2 = mainSS.getSheetByName("Sheet2");  // Salesman + Email list
+  
+  var data1 = sheet1.getDataRange().getValues();
+  var data2 = sheet2.getDataRange().getValues();
+  var header = data1[0];
+  
+  for (var i = 1; i < data2.length; i++) {
+    var salesman = data2[i][0];
+    var email = data2[i][1];
+    
+    if (!salesman || !email) continue;
+    
+    var filteredRows = [header];
+    for (var j = 1; j < data1.length; j++) {
+      if (data1[j][6] == salesman) { // 7th column = Salesman
+        filteredRows.push(data1[j]);
+      }
+    }
+    
+    var tempSS = SpreadsheetApp.create(salesman + "_Sales_Data");
+    var tempSheet = tempSS.getSheets()[0];
+    tempSheet.getRange(1, 1, filteredRows.length, filteredRows[0].length)
+      .setValues(filteredRows);
+
+    tempSS.addViewer(email);
+
+    MailApp.sendEmail({
+      to: email,
+      subject: "Your Sales data in this sheet",
+      body: "Hello " + salesman + ",\n\nHere is your sales data Google Sheet:\n" 
+            + tempSS.getUrl() +
+            "\n\nRegards,\nPintu Mavai"
+    });
+
+    DriveApp.getFileById(tempSS.getId()).setTrashed(true);
+  }
+}
